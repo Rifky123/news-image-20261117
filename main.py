@@ -11,4 +11,8 @@ import shutil
 SRC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "entry.png")
 OUT_DIR = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
 os.makedirs(OUT_DIR, exist_ok=True)
-shutil.copyfile(SRC, os.path.join(OUT_DIR, "entry.png"))
+if not os.path.isfile(SRC):
+    raise SystemExit(f"entry.png not found next to main.py: {SRC}")
+DEST = os.path.join(OUT_DIR, "entry.png")
+shutil.copyfile(SRC, DEST)
+print(f"wrote {DEST} ({os.path.getsize(DEST)} bytes)")
